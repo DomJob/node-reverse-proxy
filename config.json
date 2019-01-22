@@ -2,6 +2,8 @@
  "domain": "example.com",
  
  "ssl" : {
+   "enabled": true,
+   "force-https": true,
    "privkey": "/etc/ssl/example.com/privkey.pem",
    "cert": "/etc/ssl/example.com/cert.pem"
  },

@@ -7,11 +7,6 @@ const config = JSON.parse(fs.readFileSync('./config.json', 'utf8'));
 const forwards = config.services;
 const domain = config.domain;
 
-const options = {
-  key: fs.readFileSync(config.ssl.privkey),
-  cert: fs.readFileSync(config.ssl.cert)
-};
-
 function requestListener(req, res) {
   var headers = req.headers;
   var subdomain = headers["host"].replace(`.${domain}`, "");
@@ -75,12 +70,18 @@ function requestListener(req, res) {
   });
 }
 
-server = https.createServer(options, requestListener).listen(443);
+if(config.ssl.enabled) {
+  https.createServer({
+    key: fs.readFileSync(config.ssl.privkey),
+    cert: fs.readFileSync(config.ssl.cert)
+   }, requestListener).listen(443);
+}
 
-http
-  .createServer((req, res) => {
-    res.writeHead(302, { Location: "https://" + req.headers.host + req.url });
-    res.end();
-  })
-  .listen(80);
-
+if(config.ssl.force-https) {
+  http.createServer((req, res) => {
+       res.writeHead(302, { Location: "https://" + req.headers.host + req.url });
+       res.end();
+  }).listen(80);
+}else{
+ http.createServer(requestListener).listen(80);
+}
