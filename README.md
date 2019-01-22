@@ -12,7 +12,7 @@ For example, if your domain is `example.com` and you got an HTTP app running on 
 
 ## Cons
 
-1. Websocket aren't supported
+1. Websockets aren't supported
 2. Probably can't handle a lot of requests
 
 ## Usage
