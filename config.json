@@ -1,0 +1,15 @@
+{
+ "domain": "example.com",
+ 
+ "ssl" : {
+   "privkey": "/etc/ssl/example.com/privkey.pem",
+   "cert": "/etc/ssl/example.com/cert.pem"
+ },
+ 
+ "services" :
+ {
+  "www" : 5000,
+  "files": 8000,
+  "notes": 1234
+ }
+}
